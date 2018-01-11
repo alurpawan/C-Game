@@ -64,6 +64,7 @@ void game :: Play_game(int player_count)
 				int j;
 				for(j = 0;j < 9;j++)
 				{
+					if(board[j/3][j%3] == ' '){
 					AddMove(j,1);
 					if(IsWin())
 						{
@@ -81,14 +82,15 @@ void game :: Play_game(int player_count)
 						break;
 					}
 					RemoveMove(j,0);
+				}
 
 				}
 				if(j != 9)
-					continue;
-				for(int j = 0;j < 9;j++)
+					{cout<<"Move played at :"<<j<<endl;continue;}
+				for(j = 0;j < 9;j++)
 				{
 					if(board[j/3][j%3] == ' ')
-						{AddMove(j,1);break;}
+						{AddMove(j,1);cout<<j;Display_Board();break;}
 				} 	
 
 			}
@@ -172,6 +174,8 @@ bool game :: IsWin()
 		
 	}
 	if((board[1][1] == board[2][2]) && (board[1][1] == board[0][0]) && (board[0][0] != ' '))
+		return 1;
+	if((board[0][2] == board[1][1]) && (board[1][1] == board[2][0]) && (board[0][2] != ' '))
 		return 1;
 	return 0;
 }
