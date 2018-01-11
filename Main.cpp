@@ -79,23 +79,48 @@ void game :: Display_Board()
 				cout<<board[i][j]<<"  | ";
 		}
 		if(i != 2)
-			cout<<"\n---------------\n";
+			cout<<"\n---------------	\n";
 	}
 	cout<<endl;
 }
 
 int game :: AskMove(int player_num)
 {
-	return 1;
+	int move;
+	bool valid = 1;
+	do{
+	valid = 1;
+	cout<<"Player "<<player_num+1<<" moves. Enter your move(0-8) : ";
+	cin>>move;
+	if(move<0 || move>8)
+		{valid = 0;}
+	if(board[move/3][move%3] != ' ')
+		{valid = 0;}
+	}while(!valid);
+	return move;
 }
 
 void game :: AddMove(int position, int player_num)
 {
-
+	if(player_num == 0)
+		board[position/3][position%3] = 'X';
+	else
+		board[position/3][position%3] = 'O';
+	
 }
 
 bool game :: IsWin()
 {
+	for(int i = 0;i < 3;i++)
+	{
+		if((board[i][0] == board[i][1]) && (board[i][0] == board[i][2]) && (board[i][0] != ' '))
+			return 1;
+		if((board[0][i] == board[1][i]) && (board[0][i] == board[2][i]) && (board[0][i] != ' '))
+			return 1;
+		
+	}
+	if((board[1][1] == board[2][2]) && (board[1][1] == board[0][0]) && (board[0][0] != ' '))
+		return 1;
 	return 0;
 }
 
