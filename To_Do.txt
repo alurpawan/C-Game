@@ -1,0 +1,2 @@
+-Add UI to use clicks and buttons rather than input text
+-Add difficulties so that there is (Easy,Hard,Impossible)
