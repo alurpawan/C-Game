@@ -11,6 +11,7 @@ public:
 	void Display_Board();
 	int AskMove(int);
 	void AddMove(int,int);
+	void RemoveMove(int,int);
 	bool IsWin();
 
 };
@@ -43,7 +44,58 @@ void game :: Play_game(int player_count)
 {
 	if(player_count == 1)
 	{
+		int i;
+		for(i = 0;i < 9;i++)
+		{
+			if(i%2==0)
+			{
+				int position = AskMove(0);
+				AddMove(position,0);
+				cout<<endl;
+				Display_Board();
+				if(IsWin())
+				{
+					cout<<"\nPlayer "<<(i%2)+1<<" wins\n";
+					break;
+				}
+			}
+			else
+			{
+				int j;
+				for(j = 0;j < 9;j++)
+				{
+					AddMove(j,1);
+					if(IsWin())
+						{
+							Display_Board();
+							cout<<"\nPlayer "<<(i%2)+1<<" wins\n";
+							break;
+						}
+					RemoveMove(j,1);
+					AddMove(j,0);
+					if(IsWin())
+					{
+						RemoveMove(j,0);
+						AddMove(j,1);
+						Display_Board();
+						break;
+					}
+					RemoveMove(j,0);
 
+				}
+				if(j != 9)
+					continue;
+				for(int j = 0;j < 9;j++)
+				{
+					if(board[j/3][j%3] == ' ')
+						{AddMove(j,1);break;}
+				} 	
+
+			}
+
+		}
+		if(i == 9)
+			cout<<"Draw Game...";
 	}
 	else
 	{
@@ -130,4 +182,9 @@ game :: game()
 		for(int j = 0;j < 3;j++)
 			board[i][j] = ' ';
 
+}
+
+void game :: RemoveMove(int position,int player_num)
+{
+	board[position/3][position%3] = ' ';
 }
